@@ -16,10 +16,9 @@ const connect = function() {
   //tasks to do on connection to the server
   conn.on("connect", () => {
     console.log("connection successful to the game server");
-    conn.write("Name: LDC");//sends my initial to the server
-
+    //sends my initial to the server
+    conn.write("Name: LDC");
   });
-
   return conn;
 };
 
