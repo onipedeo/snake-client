@@ -28,10 +28,24 @@ const setUpInput = function(conn) {
         connection.write('Move: right');
       }
     });
+
   };
+  stdin.on("data", (data) => {
+    let msg = "";
+    if (data === "m") {
+      msg = "Hello there";
+    }
+    if (data === "n") {
+      msg = "Yippy";
+    }
+    if (data === "b") {
+      msg = "Oh no";
+    }
+    connection.write(`Say: ${msg}`);
+  });
 
   handleUserInput();
   return stdin;
-}
+};
 
 module.exports = { setUpInput };
