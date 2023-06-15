@@ -1,3 +1,4 @@
+const { cannedMessages, movementKeys } = require("./constants");
 //stores the active TCP Connection objec.
 let connection;
 
@@ -12,36 +13,27 @@ const setUpInput = function(conn) {
   //Code that handles userInput
   const handleUserInput = function() {
     stdin.on('data', (key) => {
+      //To ensure all inputted keys are responsive.
+      key = key.toUpperCase();
+      //close terminal on pressing Ctrl + C
       if (key === '\u0003') {
         process.exit();
       }
-      if (key === 'w') {
-        connection.write('Move: up');
-      }
-      if (key === 'a') {
-        connection.write('Move: left');
-      }
-      if (key === 's') {
-        connection.write('Move: down');
-      }
-      if (key === 'd') {
-        connection.write('Move: right');
+      //WASD movement implementation
+      const input = movementKeys[key];
+      if (input) {
+        connection.write(input);
       }
     });
 
   };
+  //Canned messages implementation
   stdin.on("data", (data) => {
-    let msg = "";
-    if (data === "m") {
-      msg = "Hello there";
+    data = data.toUpperCase();
+    const msg = cannedMessages[data];
+    if (msg) {
+      connection.write(`Say: ${msg}`);
     }
-    if (data === "n") {
-      msg = "Yippy";
-    }
-    if (data === "b") {
-      msg = "Oh no";
-    }
-    connection.write(`Say: ${msg}`);
   });
 
   handleUserInput();
