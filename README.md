@@ -23,3 +23,6 @@ Use `W` `A` `S` `D` to navigate the snake up, down, left, or right. Eat the red 
   - Press `M` to send _Hello There!_ to the screen.
   - Press `N` to send _Yippy_ to the screen.
   - PRess `B` to send _Oh no_ to the screen.
+
+## Credit Where Credit is Due
+Our server code for this game was not written from scratch. It is a heavily modified version of the single player game Snek created by Tania Rascia.
