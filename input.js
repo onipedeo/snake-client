@@ -10,6 +10,7 @@ const setUpInput = function(conn) {
   stdin.setEncoding('utf8');
   stdin.resume();
 
+  let intervalFunc;
   //Code that handles userInput
   const handleUserInput = function() {
     stdin.on('data', (key) => {
@@ -19,22 +20,27 @@ const setUpInput = function(conn) {
       if (key === '\u0003') {
         process.exit();
       }
+
+      //snake keeps moving
+      const snakeInterval = function(input) {
+        intervalFunc = setInterval(() => {
+          connection.write(input);
+        }, 100);
+      };
+
       //WASD movement implementation
       const input = movementKeys[key];
       if (input) {
-        connection.write(input);
+        clearInterval(intervalFunc);
+        snakeInterval(input);
+      }
+      //Canned messages implementation
+      const msg = cannedMessages[key];
+      if (msg) {
+        connection.write(`Say: ${msg}`);
       }
     });
-
   };
-  //Canned messages implementation
-  stdin.on("data", (data) => {
-    data = data.toUpperCase();
-    const msg = cannedMessages[data];
-    if (msg) {
-      connection.write(`Say: ${msg}`);
-    }
-  });
 
   handleUserInput();
   return stdin;
